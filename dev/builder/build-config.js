@@ -84,6 +84,7 @@ var CKBUILDER_CONFIG = {
 		sourcearea: 1,
 		specialchar: 1,
 		stylescombo: 1,
+		sumtfilebrowser : 1,
 		tab: 1,
 		table: 1,
 		tableselection: 1,
