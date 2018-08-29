@@ -4,7 +4,8 @@ CKEDITOR.plugins.add('sumtfilebrowser', {
           init: function (editor) {
             //Plugin logic goes here.
             editor.addCommand("sumtfilebrowser", {
-              exec: function (edt) {
+              editorFocus: false,
+			  exec: function (edt) {
 				  edt.fire('fileUpload');
               }
             });
