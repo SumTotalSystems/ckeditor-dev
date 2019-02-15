@@ -17,7 +17,6 @@ CKEDITOR.plugins.add( 'richcombo', {
 		' role="presentation">' +
 			'<span id="{id}_label" class="cke_combo_label">{label}</span>' +
 			'<a class="cke_combo_button" title="{title}" tabindex="-1"' +
-			( CKEDITOR.env.gecko && !CKEDITOR.env.hc ? '' : ' href="javascript:void(\'{titleJs}\')"' ) +
 			' hidefocus="true"' +
 			' role="button"' +
 			' aria-labelledby="{id}_label"' +
