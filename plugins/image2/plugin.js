@@ -1537,7 +1537,8 @@
 					match: centerWrapperChecker( editor )
 				},
 				img: {
-					attributes: '!src,alt,width,height'
+					attributes: '!src,alt,width,height',
+					styles: 'border-style,border-width,float,height,margin,margin-bottom,margin-left,margin-right,margin-top,width'
 				},
 				figure: {
 					classes: '!' + editor.config.image2_captionedClass
@@ -1558,7 +1559,6 @@
 			rules.div.styles = 'text-align';
 			rules.p.styles = 'text-align';
 
-			rules.img.styles = 'float';
 			rules.figure.styles = 'float,display';
 		}
 
