@@ -2,7 +2,7 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
-CKEDITOR.plugins.setLang( 'image2', 'zh', {
+CKEDITOR.plugins.setLang( 'image3', 'zh', {
 	alt: '替代文字',
 	btnUpload: '傳送至伺服器',
 	captioned: '已加標題之圖片',

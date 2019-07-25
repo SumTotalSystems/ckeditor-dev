@@ -9,15 +9,15 @@
 
 'use strict';
 
-CKEDITOR.dialog.add( 'image2', function( editor ) {
+CKEDITOR.dialog.add( 'image3', function( editor ) {
 
-	// RegExp: 123, 123px, empty string ""
-	var regexGetSizeOrEmpty = /(^\s*(\d+)(px)?\s*$)|^$/i,
+	// RegExp: 123, empty string ""
+	var regexGetSizeOrEmpty = /(^\s*(\d+)\s*$)|^$/i,
 
 		lockButtonId = CKEDITOR.tools.getNextId(),
 		resetButtonId = CKEDITOR.tools.getNextId(),
 
-		lang = editor.lang.image2,
+		lang = editor.lang.image3,
 		commonLang = editor.lang.common,
 
 		lockResetStyle = 'margin-top:18px;width:40px;height:20px;',
@@ -36,7 +36,7 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 				resetButtonId: resetButtonId
 			} ),
 
-		helpers = CKEDITOR.plugins.image2,
+		helpers = CKEDITOR.plugins.image3,
 
 		// Editor instance configuration.
 		config = editor.config,
@@ -47,7 +47,7 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 		// impact on dialog structure and presence of fields.
 		features = editor.widgets.registered.image.features,
 
-		// Functions inherited from image2 plugin.
+		// Functions inherited from image3 plugin.
 		getNatural = helpers.getNatural,
 
 		// Global variables referring to the dialog's context.
@@ -71,7 +71,7 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 		natural;
 
 	// Validates dimension. Allowed values are:
-	// "123px", "123", "" (empty string)
+	// "123", "" (empty string)
 	function validateDimension() {
 		var match = this.getValue().match( regexGetSizeOrEmpty ),
 			isValid = !!( match && parseInt( match[ 1 ], 10 ) !== 0 );
@@ -147,10 +147,10 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 					return toggleLockRatio( false );
 
 				// Fill width field with the width of the new image.
-				widthField.setValue( editor.config.image2_prefillDimensions === false ? 0 : width );
+				widthField.setValue( editor.config.image3_prefillDimensions === false ? 0 : width );
 
 				// Fill height field with the height of the new image.
-				heightField.setValue( editor.config.image2_prefillDimensions === false ? 0 : height );
+				heightField.setValue( editor.config.image3_prefillDimensions === false ? 0 : height );
 
 				// Cache the new width.
 				preLoadedWidth = width;
@@ -187,6 +187,21 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 		else {
 			// Re-enable width and height fields.
 			toggleDimensions( true );
+		}
+	}
+	
+	/*
+		Invoked when the user changes the dimension type.
+	*/
+	function onChangeDimensionType(){
+		var value = this.getValue();
+		if(value == 'px'){//Size using pixels
+			widthField.setValue(preLoadedWidth);
+			heightField.setValue(preLoadedHeight);
+		}
+		else { //size using percentage
+			widthField.setValue(100);
+			heightField.setValue(100);
 		}
 	}
 
@@ -433,7 +448,31 @@ CKEDITOR.dialog.add( 'image2', function( editor ) {
 						commit: function( widget ) {
 							widget.setData( 'alt', this.getValue() );
 						},
-						validate: editor.config.image2_altRequired === true ? CKEDITOR.dialog.validate.notEmpty( lang.altMissing ) : null
+						validate: editor.config.image3_altRequired === true ? CKEDITOR.dialog.validate.notEmpty( lang.altMissing ) : null
+					},
+					{
+						type: 'hbox',
+						widths: [ '100%'],
+						requiredContent: features.dimension.requiredContent,
+						children: [
+							{
+								type: 'radio',
+								width: '45px',
+								id: 'sizeimageby',
+								label: lang.sizeImageBy,
+								onClick: onChangeDimensionType,
+								items: [[lang.pixels, 'px'],[lang.percentage, '%']],
+								onLoad: function() {
+									//widthField = this;
+								},
+								setup: function( widget ) {
+									this.setValue( widget.data.sizeImageBy );
+								},
+								commit: function( widget ) {
+									widget.setData( 'sizeImageBy', this.getValue() );
+								}
+							}
+						]
 					},
 					{
 						type: 'hbox',

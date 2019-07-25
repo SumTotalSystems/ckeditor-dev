@@ -2,7 +2,7 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
-CKEDITOR.plugins.setLang( 'image2', 'sv', {
+CKEDITOR.plugins.setLang( 'image3', 'sv', {
 	alt: 'Alternativ text',
 	btnUpload: 'Skicka till server',
 	captioned: 'Rubricerad bild',

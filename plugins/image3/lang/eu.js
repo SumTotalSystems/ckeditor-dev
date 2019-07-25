@@ -2,7 +2,7 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
-CKEDITOR.plugins.setLang( 'image2', 'eu', {
+CKEDITOR.plugins.setLang( 'image3', 'eu', {
 	alt: 'Ordezko testua',
 	btnUpload: 'Bidali zerbitzarira',
 	captioned: 'Argazki oina',

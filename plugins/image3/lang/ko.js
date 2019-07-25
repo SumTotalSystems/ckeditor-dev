@@ -2,7 +2,7 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
-CKEDITOR.plugins.setLang( 'image2', 'ko', {
+CKEDITOR.plugins.setLang( 'image3', 'ko', {
 	alt: '대체 문자열',
 	btnUpload: '서버로 전송',
 	captioned: '이미지 설명 넣기',

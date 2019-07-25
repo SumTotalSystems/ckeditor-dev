@@ -2,7 +2,7 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
-CKEDITOR.plugins.setLang( 'image2', 'fa', {
+CKEDITOR.plugins.setLang( 'image3', 'fa', {
 	alt: 'متن جایگزین',
 	btnUpload: 'به سرور بفرست',
 	captioned: 'تصویر زیرنویس شده',

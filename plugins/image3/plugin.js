@@ -1,6 +1,7 @@
 ﻿/**
  * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
+ * This plugin is a direct copy of Image2 with added logic to handle sizing images by percentages.
  */
 
 'use strict';
@@ -13,10 +14,9 @@
 				template +
 				'<figcaption>{captionPlaceholder}</figcaption>' +
 			'</figure>' ),
-		alignmentsObj = { left: 0, center: 1, right: 2 },
-		regexPercent = /^\s*(\d+\%)\s*$/i;
+		alignmentsObj = { left: 0, center: 1, right: 2 };
 
-	CKEDITOR.plugins.add( 'image2', {
+	CKEDITOR.plugins.add( 'image3', {
 		// jscs:disable maximumLineLength
 		lang: 'af,ar,az,bg,bn,bs,ca,cs,cy,da,de,de-ch,el,en,en-au,en-ca,en-gb,eo,es,es-mx,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,oc,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
 		// jscs:enable maximumLineLength
@@ -68,18 +68,17 @@
 		},
 
 		init: function( editor ) {
-			// Adapts configuration from original image plugin. Should be removed
-			// when we'll rename image2 to image.
+			// Adapts configuration from original image plugin. 
 			var config = editor.config,
-				lang = editor.lang.image2,
+				lang = editor.lang.image3,
 				image = widgetDef( editor );
 
 			// Since filebrowser plugin discovers config properties by dialog (plugin?)
-			// names (sic!), this hack will be necessary as long as Image2 is not named
-			// Image. And since Image2 will never be Image, for sure some filebrowser logic
+			// names (sic!), this hack will be necessary as long as Image3 is not named
+			// Image. And since image3 will never be Image, for sure some filebrowser logic
 			// got to be refined.
-			config.filebrowserImage2BrowseUrl = config.filebrowserImageBrowseUrl;
-			config.filebrowserImage2UploadUrl = config.filebrowserImageUploadUrl;
+			config.filebrowserImage3BrowseUrl = config.filebrowserImageBrowseUrl;
+			config.filebrowserImage3UploadUrl = config.filebrowserImageUploadUrl;
 
 			// Add custom elementspath names to widget definition.
 			image.pathName = lang.pathName;
@@ -106,7 +105,7 @@
 				} );
 			}
 
-			CKEDITOR.dialog.add( 'image2', this.path + 'dialogs/image2.js' );
+			CKEDITOR.dialog.add( 'image3', this.path + 'dialogs/image3.js' );
 		},
 
 		afterInit: function( editor ) {
@@ -147,7 +146,7 @@
 	// 		│      │</wrapper>                     │                             │
 	// 		└──────┴───────────────────────────────┴─────────────────────────────┘
 	//
-	// Non-captioned widget (config.image2_alignClasses defined)
+	// Non-captioned widget (config.image3_alignClasses defined)
 	// 		┌──────┬───────────────────────────────┬─────────────────────────────┐
 	// 		│Align │Internal form                  │Data                         │
 	// 		├──────┼───────────────────────────────┼─────────────────────────────┤
@@ -191,7 +190,7 @@
 	// 		│      │</wrapper>                              │                                        │
 	// 		└──────┴────────────────────────────────────────┴────────────────────────────────────────┘
 	//
-	// Captioned widget (config.image2_alignClasses defined)
+	// Captioned widget (config.image3_alignClasses defined)
 	// 		┌──────┬────────────────────────────────────────┬────────────────────────────────────────┐
 	// 		│Align │Internal form                           │Data                                    │
 	// 		├──────┼────────────────────────────────────────┼────────────────────────────────────────┤
@@ -215,8 +214,8 @@
 	// @param {CKEDITOR.editor}
 	// @returns {Object}
 	function widgetDef( editor ) {
-		var alignClasses = editor.config.image2_alignClasses,
-			captionedClass = editor.config.image2_captionedClass;
+		var alignClasses = editor.config.image3_alignClasses,
+			captionedClass = editor.config.image3_captionedClass;
 
 		function deflate() {
 			if ( this.deflated )
@@ -279,7 +278,7 @@
 
 			// This widget converts style-driven dimensions to attributes.
 			contentTransformations: [
-				[ 'img[width]: sizeToAttribute' ]
+				//[ 'img[width]: sizeToAttribute' ] -> Can't use this as it only works with pixels...
 			],
 
 			// This widget has an editable caption.
@@ -297,7 +296,7 @@
 			},
 
 			// The name of this widget's dialog.
-			dialog: 'image2',
+			dialog: 'image3',
 
 			// Template of the widget: plain image.
 			template: template,
@@ -359,7 +358,7 @@
 			},
 
 			init: function() {
-				var helpers = CKEDITOR.plugins.image2,
+				var helpers = CKEDITOR.plugins.image3,
 					image = this.parts.image,
 					data = {
 						hasCaption: !!this.parts.caption,
@@ -367,10 +366,25 @@
 						alt: image.getAttribute( 'alt' ) || '',
 						width: image.getAttribute( 'width' ) || '',
 						height: image.getAttribute( 'height' ) || '',
-
 						// Lock ratio is on by default (http://dev.ckeditor.com/ticket/10833).
 						lock: this.ready ? helpers.checkHasNaturalRatio( image ) : true
 					};
+					
+				var removeStringFromEnd = function(stringToUpdate, stringToRemove){
+					return stringToUpdate.substring(0, stringToUpdate.length - stringToRemove.length)
+				};
+				
+				//Parse out the dimension type (% or px) and remove it from the width/height
+				if(data.width.indexOf('%') == -1 && data.height.indexOf('%') == -1){
+					data.sizeImageBy = 'px';//Size by pixels
+					data.width = removeStringFromEnd(data.width, data.sizeImageBy);
+					data.height = removeStringFromEnd(data.height, data.sizeImageBy);
+				}
+				else{
+					data.sizeImageBy = '%';//Size by percentage
+					data.width = removeStringFromEnd(data.width, data.sizeImageBy);
+					data.height = removeStringFromEnd(data.height, data.sizeImageBy);
+				}
 
 				// If we used 'a' in widget#parts definition, it could happen that
 				// selected element is a child of widget.parts#caption. Since there's no clever
@@ -429,7 +443,7 @@
 				// Setup dynamic image resizing with mouse.
 				// Don't initialize resizer when dimensions are disallowed (http://dev.ckeditor.com/ticket/11004).
 				// Don't initialize resizer when editor.readOnly is set to true (#719).
-				if ( editor.filter.checkFeature( this.features.dimension ) && editor.config.image2_disableResizer !== true && editor.readOnly != true ) {
+				if ( editor.filter.checkFeature( this.features.dimension ) && editor.config.image3_disableResizer !== true && editor.readOnly != true ) {
 					setupResizer( this );
 				}
 
@@ -452,25 +466,25 @@
 				}, this );
 			},
 
-			// Overrides default method to handle internal mutability of Image2.
+			// Overrides default method to handle internal mutability of Image3.
 			// @see CKEDITOR.plugins.widget#addClass
 			addClass: function( className ) {
 				getStyleableElement( this ).addClass( className );
 			},
 
-			// Overrides default method to handle internal mutability of Image2.
+			// Overrides default method to handle internal mutability of Image3.
 			// @see CKEDITOR.plugins.widget#hasClass
 			hasClass: function( className ) {
 				return getStyleableElement( this ).hasClass( className );
 			},
 
-			// Overrides default method to handle internal mutability of Image2.
+			// Overrides default method to handle internal mutability of Image3.
 			// @see CKEDITOR.plugins.widget#removeClass
 			removeClass: function( className ) {
 				getStyleableElement( this ).removeClass( className );
 			},
 
-			// Overrides default method to handle internal mutability of Image2.
+			// Overrides default method to handle internal mutability of Image3.
 			// @see CKEDITOR.plugins.widget#getClasses
 			getClasses: ( function() {
 				var classRegex = new RegExp( '^(' + [].concat( captionedClass, alignClasses ).join( '|' ) + ')$' );
@@ -478,7 +492,7 @@
 				return function() {
 					var classes = this.repository.parseElementClasses( getStyleableElement( this ).getAttribute( 'class' ) );
 
-					// Neither config.image2_captionedClass nor config.image2_alignClasses
+					// Neither config.image3_captionedClass nor config.image3_alignClasses
 					// do not belong to style classes.
 					for ( var c in classes ) {
 						if ( classRegex.test( c ) )
@@ -501,17 +515,17 @@
 	}
 
 	/**
-	 * A set of Enhanced Image (image2) plugin helpers.
+	 * A set of Enhanced Image (image3) plugin helpers.
 	 *
 	 * @class
 	 * @singleton
 	 */
-	CKEDITOR.plugins.image2 = {
+	CKEDITOR.plugins.image3 = {
 		stateShifter: function( editor ) {
 			// Tag name used for centering non-captioned widgets.
 			var doc = editor.document,
-				alignClasses = editor.config.image2_alignClasses,
-				captionedClass = editor.config.image2_captionedClass,
+				alignClasses = editor.config.image3_alignClasses,
+				captionedClass = editor.config.image3_captionedClass,
 				editable = editor.editable(),
 
 				// The order that stateActions get executed. It matters!
@@ -576,7 +590,7 @@
 						// Create new <figure> from widget template.
 						var figure = CKEDITOR.dom.element.createFromHtml( templateBlock.output( {
 							captionedClass: captionedClass,
-							captionPlaceholder: editor.lang.image2.captionPlaceholder
+							captionPlaceholder: editor.lang.image3.captionPlaceholder
 						} ), doc );
 
 						// Replace element with <figure>.
@@ -626,7 +640,7 @@
 								newEl = wrapInLink( img, shift.newData.link );
 
 							// Set and remove all attributes associated with this state.
-							var attributes = CKEDITOR.plugins.image2.getLinkAttributesGetter()( editor, newValue );
+							var attributes = CKEDITOR.plugins.image3.getLinkAttributesGetter()( editor, newValue );
 
 							if ( !CKEDITOR.tools.isEmpty( attributes.set ) )
 								( newEl || link ).setAttributes( attributes.set );
@@ -884,13 +898,13 @@
 	}
 
 	// Returns a function that creates widgets from all <img> and
-	// <figure class="{config.image2_captionedClass}"> elements.
+	// <figure class="{config.image3_captionedClass}"> elements.
 	//
 	// @param {CKEDITOR.editor} editor
 	// @returns {Function}
 	function upcastWidgetElement( editor ) {
 		var isCenterWrapper = centerWrapperChecker( editor ),
-			captionedClass = editor.config.image2_captionedClass;
+			captionedClass = editor.config.image3_captionedClass;
 
 		// @param {CKEDITOR.htmlParser.element} el
 		// @param {Object} data
@@ -946,15 +960,6 @@
 			if ( !image )
 				return;
 
-			// If there's an image, then cool, we got a widget.
-			// Now just remove dimension attributes expressed with %.
-			for ( var d in dimensions ) {
-				var dimension = image.attributes[ d ];
-
-				if ( dimension && dimension.match( regexPercent ) )
-					delete image.attributes[ d ];
-			}
-
 			return el;
 		};
 	}
@@ -964,12 +969,12 @@
 	//
 	// @param {CKEDITOR.editor}
 	function downcastWidgetElement( editor ) {
-		var alignClasses = editor.config.image2_alignClasses;
+		var alignClasses = editor.config.image3_alignClasses;
 
 		// @param {CKEDITOR.htmlParser.element} el
 		return function( el ) {
 			// In case of <a><img/></a>, <img/> is the element to hold
-			// inline styles or classes (image2_alignClasses).
+			// inline styles or classes (image3_alignClasses).
 			var attrsHolder = el.name == 'a' ? el.getFirst() : el,
 				attrs = attrsHolder.attributes,
 				align = this.data.align;
@@ -1025,8 +1030,8 @@
 	// @param {CKEDITOR.editor} editor
 	// @returns {Function}
 	function centerWrapperChecker( editor ) {
-		var captionedClass = editor.config.image2_captionedClass,
-			alignClasses = editor.config.image2_alignClasses,
+		var captionedClass = editor.config.image3_captionedClass,
+			alignClasses = editor.config.image3_alignClasses,
 			validChildren = { figure: 1, a: 1, img: 1 };
 
 		return function( el ) {
@@ -1075,7 +1080,7 @@
 				}
 			}
 
-			// Centering wrapper got to be... centering. If image2_alignClasses are defined,
+			// Centering wrapper got to be... centering. If image3_alignClasses are defined,
 			// check for centering class. Otherwise, check the style.
 			if ( alignClasses ? el.hasClass( alignClasses[ 1 ] ) :
 					CKEDITOR.tools.parseCssText( el.attributes.style || '', true )[ 'text-align' ] == 'center' )
@@ -1107,7 +1112,7 @@
 
 		for ( var d in dimensions ) {
 			if ( dimensions[ d ] )
-				image.setAttribute( d, dimensions[ d ] );
+				image.setAttribute( d, dimensions[ d ] + data.sizeImageBy);
 			else
 				image.removeAttribute( d );
 		}
@@ -1117,6 +1122,13 @@
 	//
 	// @param {CKEDITOR.plugins.widget} widget
 	function setupResizer( widget ) {
+		// Temporarily remove the resizer when using percentage; This will be fixed in a future requirement.
+		if(widget.data.sizeImageBy == '%')
+		{
+			return;
+		}
+		
+		
 		var editor = widget.editor,
 			editable = editor.editable(),
 			doc = editor.document,
@@ -1125,11 +1137,12 @@
 			resizer = widget.resizer = doc.createElement( 'span' );
 
 		resizer.addClass( 'cke_image_resizer' );
-		resizer.setAttribute( 'title', editor.lang.image2.resizer );
+		resizer.setAttribute( 'title', editor.lang.image3.resizer );
 		resizer.append( new CKEDITOR.dom.text( '\u200b', doc ) );
+		
 
 		// Inline widgets don't need a resizer wrapper as an image spans the entire widget.
-		if ( !widget.inline ) {
+		if ( !widget.inline) {
 			var imageOrLink = widget.parts.link || widget.parts.image,
 				oldResizeWrapper = imageOrLink.getParent(),
 				resizeWrapper = doc.createElement( 'span' );
@@ -1438,10 +1451,10 @@
 					if ( widget && ( widget.inline ? !widget.wrapper.getAscendant( 'a' ) : 1 ) ) {
 						this.setupContent( widget.data.link || {} );
 
-						// Hide the display text in case of linking image2 widget.
+						// Hide the display text in case of linking image3 widget.
 						displayTextField.hide();
 					} else {
-						// Make sure that display text is visible, as it might be hidden by image2 integration
+						// Make sure that display text is visible, as it might be hidden by image3 integration
 						// before.
 						displayTextField.show();
 						onShow.apply( this, arguments );
@@ -1521,13 +1534,13 @@
 	}
 
 	// Returns a set of widget allowedContent rules, depending
-	// on configurations like config#image2_alignClasses or
-	// config#image2_captionedClass.
+	// on configurations like config#image3_alignClasses or
+	// config#image3_captionedClass.
 	//
 	// @param {CKEDITOR.editor}
 	// @returns {Object}
 	function getWidgetAllowedContent( editor ) {
-		var alignClasses = editor.config.image2_alignClasses,
+		var alignClasses = editor.config.image3_alignClasses,
 			rules = {
 				// Widget may need <div> or <p> centering wrapper.
 				div: {
@@ -1541,7 +1554,7 @@
 					styles: 'border-style,border-width,float,height,margin,margin-bottom,margin-left,margin-right,margin-top,width'
 				},
 				figure: {
-					classes: '!' + editor.config.image2_captionedClass
+					classes: '!' + editor.config.image3_captionedClass
 				},
 				figcaption: true
 			};
@@ -1573,7 +1586,7 @@
 	// @param {CKEDITOR.editor}
 	// @returns {Object}
 	function getWidgetFeatures( editor ) {
-		var alignClasses = editor.config.image2_alignClasses,
+		var alignClasses = editor.config.image3_alignClasses,
 			features = {
 				dimension: {
 					requiredContent: 'img[width,height]'
@@ -1608,12 +1621,12 @@
  * [SDK sample](http://sdk.ckeditor.com/samples/captionedimage.html).
  *
  *		// Changes the class to "captionedImage".
- *		config.image2_captionedClass = 'captionedImage';
+ *		config.image3_captionedClass = 'captionedImage';
  *
- * @cfg {String} [image2_captionedClass='image']
+ * @cfg {String} [image3_captionedClass='image']
  * @member CKEDITOR.config
  */
-CKEDITOR.config.image2_captionedClass = 'image';
+CKEDITOR.config.image3_captionedClass = 'image';
 
 /**
  * Determines whether dimension inputs should be automatically filled when the image URL changes in the Enhanced Image
@@ -1622,10 +1635,10 @@ CKEDITOR.config.image2_captionedClass = 'image';
  * Read more in the [documentation](#!/guide/dev_captionedimage) and see the
  * [SDK sample](http://sdk.ckeditor.com/samples/captionedimage.html).
  *
- *		config.image2_prefillDimensions = false;
+ *		config.image3_prefillDimensions = false;
  *
  * @since 4.5
- * @cfg {Boolean} [image2_prefillDimensions=true]
+ * @cfg {Boolean} [image3_prefillDimensions=true]
  * @member CKEDITOR.config
  */
 
@@ -1635,10 +1648,10 @@ CKEDITOR.config.image2_captionedClass = 'image';
  * Read more in the [documentation](#!/guide/dev_captionedimage) and see the
  * [SDK sample](http://sdk.ckeditor.com/samples/captionedimage.html).
  *
- *		config.image2_disableResizer = true;
+ *		config.image3_disableResizer = true;
  *
  * @since 4.5
- * @cfg {Boolean} [image2_disableResizer=false]
+ * @cfg {Boolean} [image3_disableResizer=false]
  * @member CKEDITOR.config
  */
 
@@ -1649,7 +1662,7 @@ CKEDITOR.config.image2_captionedClass = 'image';
  * Classes should be defined in an array of three elements, containing left, center, and right
  * alignment classes, respectively. For example:
  *
- *		config.image2_alignClasses = [ 'align-left', 'align-center', 'align-right' ];
+ *		config.image3_alignClasses = [ 'align-left', 'align-center', 'align-right' ];
  *
  * **Note**: Once this configuration option is set, the plugin will no longer produce inline
  * styles for alignment. It means that e.g. the following HTML will be produced:
@@ -1672,7 +1685,7 @@ CKEDITOR.config.image2_captionedClass = 'image';
  *
  * For example, considering the following configuration:
  *
- *		config.image2_alignClasses = [ 'align-left', 'align-center', 'align-right' ];
+ *		config.image3_alignClasses = [ 'align-left', 'align-center', 'align-right' ];
  *
  * CSS rules can be defined as follows:
  *
@@ -1696,19 +1709,19 @@ CKEDITOR.config.image2_captionedClass = 'image';
  * [SDK sample](http://sdk.ckeditor.com/samples/captionedimage.html).
  *
  * @since 4.4
- * @cfg {String[]} [image2_alignClasses=null]
+ * @cfg {String[]} [image3_alignClasses=null]
  * @member CKEDITOR.config
  */
 
 /**
  * Determines whether alternative text is required for the captioned image.
  *
- *		config.image2_altRequired = true;
+ *		config.image3_altRequired = true;
  *
  * Read more in the [documentation](#!/guide/dev_captionedimage) and see the
  * [SDK sample](http://sdk.ckeditor.com/samples/captionedimage.html).
  *
  * @since 4.6.0
- * @cfg {Boolean} [image2_altRequired=false]
+ * @cfg {Boolean} [image3_altRequired=false]
  * @member CKEDITOR.config
  */

@@ -83,7 +83,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 		<h1>Apollo 11</h1>
 
 		<figure class="image" style="float: right">
-			<img alt="Saturn V" src="assets/image1.jpg" width="200" data-foo="*********" data-bar="@@@@@@@@" />
+			<img alt="Saturn V" src="assets/image1.jpg" width="200px" height="150px" data-foo="*********" data-bar="@@@@@@@@" />
 			<figcaption>Roll out of Saturn V on launch pad</figcaption>
 		</figure>
 
@@ -123,7 +123,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 		<p>After being sent to the Moon by the Saturn V&#39;s upper stage, the astronauts separated the spacecraft from it and travelled for three days until they entered into lunar orbit. Armstrong and Aldrin then moved into the Lunar Module and landed in the <a href="http://en.wikipedia.org/wiki/Mare_Tranquillitatis" title="Mare Tranquillitatis">Sea of Tranquility</a>. They stayed a total of about 21 and a half hours on the lunar surface. After lifting off in the upper part of the Lunar Module and rejoining Collins in the Command Module, they returned to Earth and landed in the <a href="http://en.wikipedia.org/wiki/Pacific_Ocean" title="Pacific Ocean">Pacific Ocean</a> on July 24.</p>
 
 		<p style="text-align:center">
-			<img alt="Saturn V" src="assets/image1.jpg" width="200" />
+			<img alt="Saturn V1" src="assets/image1.jpg" width="50%" height="50%" />
 		</p>
 
 		<hr />
@@ -287,7 +287,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 		CKEDITOR.disableAutoInline = true;
 
 		CKEDITOR.replace( 'editor1', {
-			extraPlugins: 'image2',
+			extraPlugins: 'image3',
 			height: 600,
 			contentsCss: [ '../../../contents.css', 'contents.css' ],
 			extraAllowedContent: 'img[data-foo,data-bar]',
@@ -299,16 +299,16 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 		} );
 
 		CKEDITOR.inline( 'editor2', {
-			extraPlugins: 'image2,sourcedialog'
+			extraPlugins: 'image3,sourcedialog'
 		} );
 
 		CKEDITOR.replace( 'editor3', {
-			extraPlugins: 'image2,divarea',
+			extraPlugins: 'image3,divarea',
 			height: 600
 		} );
 
 		CKEDITOR.replace( 'editor4', {
-			extraPlugins: 'image2',
+			extraPlugins: 'image3',
 			image2_alignClasses: [ 'align-left', 'align-center', 'align-right' ],
 			contentsCss: [ '../../../contents.css', 'contents.css' ],
 			height: 600

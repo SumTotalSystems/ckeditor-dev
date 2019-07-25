@@ -2,7 +2,7 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
-CKEDITOR.plugins.setLang( 'image2', 'ka', {
+CKEDITOR.plugins.setLang( 'image3', 'ka', {
 	alt: 'სანაცვლო ტექსტი',
 	btnUpload: 'სერვერისთვის გაგზავნა',
 	captioned: 'Captioned image', // MISSING

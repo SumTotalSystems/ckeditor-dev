@@ -2,7 +2,7 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
-CKEDITOR.plugins.setLang( 'image2', 'af', {
+CKEDITOR.plugins.setLang( 'image3', 'af', {
 	alt: 'Alternatiewe teks',
 	btnUpload: 'Stuur na bediener',
 	captioned: 'Captioned image', // MISSING

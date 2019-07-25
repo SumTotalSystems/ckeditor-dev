@@ -2,7 +2,7 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
-CKEDITOR.plugins.setLang( 'image2', 'th', {
+CKEDITOR.plugins.setLang( 'image3', 'th', {
 	alt: 'คำประกอบรูปภาพ',
 	btnUpload: 'อัพโหลดไฟล์ไปเก็บไว้ที่เครื่องแม่ข่าย (เซิร์ฟเวอร์)',
 	captioned: 'Captioned image', // MISSING

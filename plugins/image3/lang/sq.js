@@ -2,7 +2,7 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
-CKEDITOR.plugins.setLang( 'image2', 'sq', {
+CKEDITOR.plugins.setLang( 'image3', 'sq', {
 	alt: 'Tekst Alternativ',
 	btnUpload: 'Dërgo në server',
 	captioned: 'Captioned image', // MISSING

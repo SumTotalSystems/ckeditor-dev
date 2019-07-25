@@ -2,7 +2,7 @@
 Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
-CKEDITOR.plugins.setLang( 'image2', 'gu', {
+CKEDITOR.plugins.setLang( 'image3', 'gu', {
 	alt: 'ઑલ્ટર્નટ ટેક્સ્ટ',
 	btnUpload: 'આ સર્વરને મોકલવું',
 	captioned: 'Captioned image', // MISSING
