@@ -191,18 +191,45 @@ CKEDITOR.dialog.add( 'image3', function( editor ) {
 	}
 	
 	/*
+		Converts the given dimensions to the specified type.
+		@param dimensions - An object containing the properties for width/height to convert.
+		@param type - The type of conversion to perform (px or %)
+		@returns - The updated dimensions object containing the converted values.
+	*/
+	function convertDimensionsTo(dimensions, type){
+		//Grab the widget wrapper parent's size so that we know how big the bounding box is for converting pixels into percentage since the percentage will be based on the full width/height of the widget.
+		var clientRect = widget.wrapper.getParent().getClientRect();
+		var clientWidth = clientRect.width;
+		var clientHeight = clientRect.height;
+		
+		var returnedDimensions = {width: 0, height: 0};
+		
+		if(type == 'px'){//dimensions are currently percent so change to pixels
+			returnedDimensions.width = Math.round((dimensions.width / 100) * clientWidth);
+			//When converting the Height, the CKEditor window doesn't ever seem to have a height defined so this attribute won't actually change the height of the image.  By default the height becomes equal to the natural ratio of the width of the image.  Note that there may be other cases required here.  Height would be converted as Math.round((currentHeight / 100) * clientWidth) if it worked like width.
+			returnedDimensions.height = Math.round((domHeight / domWidth) * returnedDimensions.width);
+		}
+		else { //dimensions are currently pixels so change to percent
+			returnedDimensions.height = Math.round((dimensions.height / clientHeight) * 100);
+			returnedDimensions.width = Math.round((dimensions.width / clientWidth) * 100);
+		}
+		return returnedDimensions;
+	}
+	
+	/*
 		Invoked when the user changes the dimension type.
 	*/
 	function onChangeDimensionType(){
 		var value = this.getValue();
-		if(value == 'px'){//Size using pixels
-			widthField.setValue(preLoadedWidth);
-			heightField.setValue(preLoadedHeight);
-		}
-		else { //size using percentage
-			widthField.setValue(100);
-			heightField.setValue(100);
-		}
+		
+		var dimensions = {
+			width: widthField.getValue(),
+			height: heightField.getValue()
+		};
+		dimensions = convertDimensionsTo(dimensions, value);
+		
+		widthField.setValue(dimensions.width);
+		heightField.setValue(dimensions.height);
 	}
 
 	function onChangeDimension() {
@@ -460,7 +487,7 @@ CKEDITOR.dialog.add( 'image3', function( editor ) {
 								width: '45px',
 								id: 'sizeimageby',
 								label: lang.sizeImageBy,
-								onClick: onChangeDimensionType,
+								onChange: onChangeDimensionType,
 								items: [[lang.pixels, 'px'],[lang.percentage, '%']],
 								onLoad: function() {
 									//widthField = this;

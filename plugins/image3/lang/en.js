@@ -20,5 +20,5 @@ CKEDITOR.plugins.setLang( 'image3', 'en', {
 	altMissing: 'Alternative text is missing.',
 	pixels: 'Pixels',
 	percentage: 'Percentage',
-	sizeImageBy: 'Size Image By:'
+	sizeImageBy: 'Size image by:'
 } );

@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'hi', {
 	title: 'तस्वीर प्रॉपर्टीज़',
 	uploadTab: 'अपलोड',
 	urlMissing: 'Image source URL is missing.', // MISSING
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

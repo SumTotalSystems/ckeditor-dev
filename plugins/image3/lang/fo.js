@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'fo', {
 	title: 'Myndaeginleikar',
 	uploadTab: 'Send til ambætaran',
 	urlMissing: 'URL til mynd manglar.',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

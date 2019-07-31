@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'ar', {
 	title: 'خصائص الصورة',
 	uploadTab: 'رفع',
 	urlMissing: 'عنوان مصدر الصورة مفقود',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

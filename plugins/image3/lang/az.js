@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'az', {
 	title: 'Şəklin seçimləri',
 	uploadTab: 'Serverə yüklə',
 	urlMissing: 'Şəklin ünvanı yanlışdır.',
-	altMissing: 'Alternativ mətn tapılmayıb'
+	altMissing: 'Alternativ mətn tapılmayıb',
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'vi', {
 	title: 'Thuộc tính của ảnh',
 	uploadTab: 'Tải lên',
 	urlMissing: 'Thiếu đường dẫn hình ảnh',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

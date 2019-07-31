@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'lt', {
 	title: 'Vaizdo savybės',
 	uploadTab: 'Siųsti',
 	urlMissing: 'Paveiksliuko nuorodos nėra.',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

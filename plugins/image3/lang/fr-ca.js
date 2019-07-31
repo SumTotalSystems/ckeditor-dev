@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'fr-ca', {
 	title: 'Propriétés de l\'image3',
 	uploadTab: 'Téléverser',
 	urlMissing: 'L\'URL de la source de l\'image est manquant.',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

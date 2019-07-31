@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'et', {
 	title: 'Pildi omadused',
 	uploadTab: 'Lae üles',
 	urlMissing: 'Pildi lähte-URL on puudu.',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

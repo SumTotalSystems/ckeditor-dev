@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'ko', {
 	title: '이미지 속성',
 	uploadTab: '업로드',
 	urlMissing: '이미지 원본 주소(URL)가 없습니다.',
-	altMissing: '대체 문자가 없습니다.'
+	altMissing: '대체 문자가 없습니다.',
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

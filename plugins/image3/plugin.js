@@ -370,20 +370,20 @@
 						lock: this.ready ? helpers.checkHasNaturalRatio( image ) : true
 					};
 					
-				var removeStringFromEnd = function(stringToUpdate, stringToRemove){
-					return stringToUpdate.substring(0, stringToUpdate.length - stringToRemove.length)
-				};
-				
 				//Parse out the dimension type (% or px) and remove it from the width/height
+				//If the % sign is provided in either column then consider the provided values as if they were percentages
+				//TODO: might have to handle mixed inputs where one field is provided in pixels and the other in percentage....
 				if(data.width.indexOf('%') == -1 && data.height.indexOf('%') == -1){
 					data.sizeImageBy = 'px';//Size by pixels
-					data.width = removeStringFromEnd(data.width, data.sizeImageBy);
-					data.height = removeStringFromEnd(data.height, data.sizeImageBy);
+					
+					data.width = parseInt(data.width);
+					data.height = parseInt(data.height);
 				}
-				else{
+				else {
 					data.sizeImageBy = '%';//Size by percentage
-					data.width = removeStringFromEnd(data.width, data.sizeImageBy);
-					data.height = removeStringFromEnd(data.height, data.sizeImageBy);
+					
+					data.width = parseInt(data.width);
+					data.height = parseInt(data.height);
 				}
 
 				// If we used 'a' in widget#parts definition, it could happen that
@@ -1109,32 +1109,64 @@
 		var data = widget.data,
 			dimensions = { width: data.width, height: data.height },
 			image = widget.parts.image;
-
-		for ( var d in dimensions ) {
-			if ( dimensions[ d ] )
-				image.setAttribute( d, dimensions[ d ] + data.sizeImageBy);
-			else
-				image.removeAttribute( d );
+		var wrapper = widget.wrapper;
+		var align = widget.data.align;
+		var resizeWrapper = widget.resizeWrapper;
+		var caption = widget.element;
+		
+		//When the alignment is centered then the wrapper is the resize wrapper instead of the main widget wrapper.
+		if(align == 'center' && resizeWrapper){
+			wrapper = resizeWrapper;
 		}
+		//If we are sizing by percentage then the dimensions need to be added to the wrapper instead of the image.
+		if(data.sizeImageBy == '%'){
+			for ( var d in dimensions ) {
+				image.setAttribute(d, '100%');//Image should be 100% of wrapper.
+				if(data.hasCaption && caption){
+					caption.setStyle(d, '100%')//Caption should also be 100% of wrapper.
+				}
+				if(wrapper){
+					if ( dimensions[ d ] ){
+						wrapper.setStyle( d, dimensions[ d ] + data.sizeImageBy);
+					}
+					else{
+						wrapper.removeStyle( d );
+					}
+				}
+			}
+		}
+		else {
+			for ( var d in dimensions ) {
+				if(wrapper){
+					wrapper.removeStyle(d);//Remove any styles from the wrapper
+				}
+				if(resizeWrapper){
+					resizeWrapper.removeStyle(d);//Remove any styles on the resize wrapper;
+				}
+				if(data.hasCaption && caption){
+					caption.removeStyle(d, '100%')//Remove any styles from the figure.
+				}
+				if ( dimensions[ d ] ){
+					image.setAttribute( d, dimensions[ d ] + data.sizeImageBy);
+				}
+				else{
+					image.removeAttribute( d );
+				}
+			}
+		}
+		
 	}
 
 	// Defines all features related to drag-driven image resizing.
 	//
 	// @param {CKEDITOR.plugins.widget} widget
 	function setupResizer( widget ) {
-		// Temporarily remove the resizer when using percentage; This will be fixed in a future requirement.
-		if(widget.data.sizeImageBy == '%')
-		{
-			return;
-		}
-		
-		
 		var editor = widget.editor,
 			editable = editor.editable(),
 			doc = editor.document,
 
-			// Store the resizer in a widget for testing (http://dev.ckeditor.com/ticket/11004).
-			resizer = widget.resizer = doc.createElement( 'span' );
+		// Store the resizer in a widget for testing (http://dev.ckeditor.com/ticket/11004).
+		resizer = widget.resizer = doc.createElement( 'span' );
 
 		resizer.addClass( 'cke_image_resizer' );
 		resizer.setAttribute( 'title', editor.lang.image3.resizer );
@@ -1151,6 +1183,8 @@
 			resizeWrapper.append( imageOrLink );
 			resizeWrapper.append( resizer );
 			widget.element.append( resizeWrapper, true );
+			
+			widget.resizeWrapper = resizeWrapper;
 
 			// Remove the old wrapper which could came from e.g. pasted HTML
 			// and which could be corrupted (e.g. resizer span has been lost).
@@ -1162,6 +1196,11 @@
 
 		// Calculate values of size variables and mouse offsets.
 		resizer.on( 'mousedown', function( evt ) {
+			// Temporarily disable the resizer logic when using percentage; This will be fixed in a future requirement.
+			if(widget.data.sizeImageBy == '%')
+			{
+				return;
+			}
 			var image = widget.parts.image,
 
 				// "factor" can be either 1 or -1. I.e.: For right-aligned images, we need to

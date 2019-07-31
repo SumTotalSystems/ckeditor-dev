@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'ca', {
 	title: 'Propietats de la imatge',
 	uploadTab: 'Puja',
 	urlMissing: 'Falta la URL de la imatge.',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

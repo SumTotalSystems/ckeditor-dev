@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'gu', {
 	title: 'ચિત્રના ગુણ',
 	uploadTab: 'અપલોડ',
 	urlMissing: 'ઈમેજની મૂળ URL છે નહી.',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

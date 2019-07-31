@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'sr', {
 	title: 'Особине слика',
 	uploadTab: 'Пошаљи',
 	urlMissing: 'Недостаје УРЛ слике.',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

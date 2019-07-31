@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'eo', {
 	title: 'Atributoj de Bildo',
 	uploadTab: 'Alŝuti',
 	urlMissing: 'La fontretadreso de la bildo mankas.',
-	altMissing: 'Alternativa teksto mankas.'
+	altMissing: 'Alternativa teksto mankas.',
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

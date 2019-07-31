@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'sq', {
 	title: 'Karakteristikat e Fotografisë',
 	uploadTab: 'Ngarko',
 	urlMissing: 'Mungon URL e burimit të fotografisë.',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

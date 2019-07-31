@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'km', {
 	title: 'លក្ខណៈ​សម្បត្តិ​រូប​ភាប',
 	uploadTab: 'ផ្ទុក​ឡើង',
 	urlMissing: 'ខ្វះ URL ប្រភព​រូប​ភាព។',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

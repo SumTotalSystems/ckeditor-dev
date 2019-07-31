@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'hr', {
 	title: 'Svojstva slika',
 	uploadTab: 'Pošalji',
 	urlMissing: 'Nedostaje URL slike.',
-	altMissing: 'Nedostaje alternativni tekst.'
+	altMissing: 'Nedostaje alternativni tekst.',
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'cy', {
 	title: 'Priodweddau Delwedd',
 	uploadTab: 'Lanlwytho',
 	urlMissing: 'URL gwreiddiol y ddelwedd ar goll.',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

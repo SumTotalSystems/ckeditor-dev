@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'hu', {
 	title: 'Kép tulajdonságai',
 	uploadTab: 'Feltöltés',
 	urlMissing: 'Hiányzik a kép URL-je',
-	altMissing: 'Az alternatív szöveg hiányzik.'
+	altMissing: 'Az alternatív szöveg hiányzik.',
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

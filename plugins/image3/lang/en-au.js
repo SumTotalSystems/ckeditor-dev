@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'en-au', {
 	title: 'Image Properties',
 	uploadTab: 'Upload',
 	urlMissing: 'Image source URL is missing.', // MISSING
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

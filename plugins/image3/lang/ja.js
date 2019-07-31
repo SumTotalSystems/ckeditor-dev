@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'ja', {
 	title: '画像のプロパティ',
 	uploadTab: 'アップロード',
 	urlMissing: '画像のURLを入力してください。',
-	altMissing: '代替テキストを入力してください。'
+	altMissing: '代替テキストを入力してください。',
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );

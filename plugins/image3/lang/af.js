@@ -17,5 +17,8 @@ CKEDITOR.plugins.setLang( 'image3', 'af', {
 	title: 'Afbeelding eienskappe',
 	uploadTab: 'Oplaai',
 	urlMissing: 'Die URL na die afbeelding ontbreek.',
-	altMissing: 'Alternative text is missing.' // MISSING
+	altMissing: 'Alternative text is missing.', // MISSING
+	pixels: 'Pixels',
+	percentage: 'Percentage',
+	sizeImageBy: 'Size image by:'
 } );
