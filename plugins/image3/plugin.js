@@ -1022,12 +1022,14 @@
 			}
 			
 			if ( editor.filter.checkFeature( this.features.dimension ) ){
-				if(this.data.sizeImageBy == '%'){
-					//While downcasting the element if we are using percentage then the percentage needs to be added to the image rather than all the extra internal elements
-					if(this.data.width)
-						attrsHolder.attributes.width = this.data.width + this.data.sizeImageBy;
-					if(this.data.height)
-						attrsHolder.attributes.height = this.data.height + this.data.sizeImageBy;
+				var data = this.data;
+				if(data.sizeImageBy == '%'){
+					var image = el.name == 'img' ? el : el.find('img')[0];
+					//While downcasting the element if we are using percentage then the percentage needs to be added to the image itself
+					if(data.width)
+						image.attributes.width = data.width + data.sizeImageBy;
+					if(data.height)
+						image.attributes.height = data.height + data.sizeImageBy;
 				}
 			}
 			
