@@ -201,15 +201,23 @@ CKEDITOR.dialog.add( 'image3', function( editor ) {
 		var clientRect = widget.wrapper.getParent().getClientRect();
 		var clientWidth = clientRect.width;
 		var clientHeight = clientRect.height;
+		var originalHeight = domHeight || preLoadedHeight || 1;
+		var originalWidth = domWidth || preLoadedWidth || 1
+		
 		
 		var returnedDimensions = {width: 0, height: 0};
 		
 		if(type == 'px'){//dimensions are currently percent so change to pixels
 			returnedDimensions.width = Math.round((dimensions.width / 100) * clientWidth);
 			//When converting the Height, the CKEditor window doesn't ever seem to have a height defined so this attribute won't actually change the height of the image.  By default the height becomes equal to the natural ratio of the width of the image.  Note that there may be other cases required here.  Height would be converted as Math.round((currentHeight / 100) * clientWidth) if it worked like width.
-			returnedDimensions.height = Math.round((domHeight / domWidth) * returnedDimensions.width);
+			returnedDimensions.height = Math.round((originalHeight / originalWidth) * returnedDimensions.width);
 		}
 		else { //dimensions are currently pixels so change to percent
+			//Prevent division by zero
+			if(clientWidth == 0)
+				clientWidth = 1;
+			if(clientHeight == 0)
+				clientHeight = 1;
 			returnedDimensions.height = Math.round((dimensions.height / clientHeight) * 100);
 			returnedDimensions.width = Math.round((dimensions.width / clientWidth) * 100);
 		}
