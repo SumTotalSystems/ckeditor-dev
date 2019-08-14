@@ -373,14 +373,14 @@
 				//Parse out the dimension type (% or px) and remove it from the width/height
 				//If the % sign is provided in either column then consider the provided values as if they were percentages
 				//TODO: might have to handle mixed inputs where one field is provided in pixels and the other in percentage....
-				if(data.width.indexOf('%') == -1 && data.height.indexOf('%') == -1){
+				if(data.width.indexOf(helpers.PERCENT) == -1 && data.height.indexOf(helpers.PERCENT) == -1){
 					data.sizeImageBy = 'px';//Size by pixels
 					
 					data.width = parseInt(data.width);
 					data.height = parseInt(data.height);
 				}
 				else {
-					data.sizeImageBy = '%';//Size by percentage
+					data.sizeImageBy = helpers.PERCENT;//Size by percentage
 					
 					data.width = parseInt(data.width);
 					data.height = parseInt(data.height);
@@ -521,6 +521,8 @@
 	 * @singleton
 	 */
 	CKEDITOR.plugins.image3 = {
+		PERCENT: '%',
+		PIXEL: 'px',
 		stateShifter: function( editor ) {
 			// Tag name used for centering non-captioned widgets.
 			var doc = editor.document,
@@ -805,6 +807,46 @@
 
 			return dimensions;
 		},
+		
+		/**
+		 *	Converts the given dimensions to the specified type using the provided widget's parent element to figure out the client bounding rectangle.
+		 *  @param widget - The widget variable to obtain the parent dimensions of
+		 *	@param dimensions - An object containing the properties for height/width to convert.
+		 *	@param type - The type of conversion to perform (px or %)
+		 *  @param naturalDimensions - An object containing the height/width for the natural dimensions of the image.  This parameter is optional; if not provided then this function looks up the natural dimensions using the image in the widget.
+		 *	@returns - TA new dimensions object containing the converted values.
+		*/
+		convertDimensionsTo: function (widget, dimensions, type, naturalDimensions){
+			//Grab the widget wrapper parent's size so that we know how big the bounding box is for converting pixels into percentage since the percentage will be based on the full width/height of the widget.
+			var clientRect = widget.wrapper.getParent().getClientRect();
+			var clientWidth = clientRect.width;
+			var clientHeight = clientRect.height;
+			
+			if(typeof(naturalDimensions) == undefined){
+				naturalDimensions = this.getNatural(widget.parts.image);
+			}
+			
+			
+			var returnedDimensions = {width: 0, height: 0};
+			
+			if(type == this.PIXEL) {//dimensions are currently percent so change to pixels
+				returnedDimensions.width = Math.round((dimensions.width / 100) * clientWidth);
+				//When converting the Height, the CKEditor window doesn't ever seem to have a height defined so this attribute won't actually change the height of the image.  By default the height becomes equal to the natural ratio of the width of the image.  Note that there may be other cases required here.  Height would be converted as Math.round((currentHeight / 100) * clientWidth) if it worked like width.
+				var originalHeight = naturalDimensions.height || 1;
+				var originalWidth = naturalDimensions.width || 1;
+				returnedDimensions.height = Math.round((originalHeight / originalWidth) * returnedDimensions.width);
+			}
+			else if(type == this.PERCENT) { //dimensions are currently pixels so change to percent
+				//Prevent division by zero
+				if(clientWidth == 0)
+					clientWidth = 1;
+				if(clientHeight == 0)
+					clientHeight = 1;
+				returnedDimensions.height = Math.round((dimensions.height / clientHeight) * 100);
+				returnedDimensions.width = Math.round((dimensions.width / clientWidth) * 100);
+			}
+			return returnedDimensions;
+		},
 
 		/**
 		 * Returns an attribute getter function. Default getter comes from the Link plugin
@@ -1021,9 +1063,10 @@
 					attrs.style = CKEDITOR.tools.writeCssText( styles );
 			}
 			
+			var helpers = CKEDITOR.plugins.image3;
 			if ( editor.filter.checkFeature( this.features.dimension ) ){
 				var data = this.data;
-				if(data.sizeImageBy == '%'){
+				if(data.sizeImageBy == helpers.PERCENT){
 					var image = el.name == 'img' ? el : el.find('img')[0];
 					//While downcasting the element if we are using percentage then the percentage needs to be added to the image itself
 					if(data.width)
@@ -1131,8 +1174,9 @@
 		if(align == 'center' && resizeWrapper){
 			wrapper = resizeWrapper;
 		}
+		var helpers = CKEDITOR.plugins.image3
 		//If we are sizing by percentage then the dimensions need to be added to the wrapper instead of the image.
-		if(data.sizeImageBy == '%'){
+		if(data.sizeImageBy == helpers.PERCENT){
 			for ( var d in dimensions ) {
 				image.setAttribute(d, '100%');//Image should be 100% of wrapper.
 				if(data.hasCaption && caption){
@@ -1209,8 +1253,9 @@
 
 		// Calculate values of size variables and mouse offsets.
 		resizer.on( 'mousedown', function( evt ) {
+			var helpers = CKEDITOR.plugins.image3
 			// Temporarily disable the resizer logic when using percentage; This will be fixed in a future requirement.
-			if(widget.data.sizeImageBy == '%')
+			if(widget.data.sizeImageBy == helpers.PERCENT)
 			{
 				return;
 			}

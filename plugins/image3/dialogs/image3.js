@@ -66,9 +66,17 @@ CKEDITOR.dialog.add( 'image3', function( editor ) {
 		lockRatio, userDefinedLock,
 
 		// Global variables referring to dialog fields and elements.
-		lockButton, resetButton, widthField, heightField,
+		lockButton, resetButton, widthField, heightField, sizeImageByField,
 
 		natural;
+		
+	//Global constants
+	var PERCENT = helpers.PERCENT;
+	var PIXEL = helpers.PIXEL;
+	
+	var getNaturalImageDimensions = function(){
+		return {height: domHeight || preLoadedHeight, width: domWidth || preLoadedWidth}
+	}
 
 	// Validates dimension. Allowed values are:
 	// "123", "" (empty string)
@@ -191,40 +199,6 @@ CKEDITOR.dialog.add( 'image3', function( editor ) {
 	}
 	
 	/*
-		Converts the given dimensions to the specified type.
-		@param dimensions - An object containing the properties for width/height to convert.
-		@param type - The type of conversion to perform (px or %)
-		@returns - The updated dimensions object containing the converted values.
-	*/
-	function convertDimensionsTo(dimensions, type){
-		//Grab the widget wrapper parent's size so that we know how big the bounding box is for converting pixels into percentage since the percentage will be based on the full width/height of the widget.
-		var clientRect = widget.wrapper.getParent().getClientRect();
-		var clientWidth = clientRect.width;
-		var clientHeight = clientRect.height;
-		var originalHeight = domHeight || preLoadedHeight || 1;
-		var originalWidth = domWidth || preLoadedWidth || 1
-		
-		
-		var returnedDimensions = {width: 0, height: 0};
-		
-		if(type == 'px'){//dimensions are currently percent so change to pixels
-			returnedDimensions.width = Math.round((dimensions.width / 100) * clientWidth);
-			//When converting the Height, the CKEditor window doesn't ever seem to have a height defined so this attribute won't actually change the height of the image.  By default the height becomes equal to the natural ratio of the width of the image.  Note that there may be other cases required here.  Height would be converted as Math.round((currentHeight / 100) * clientWidth) if it worked like width.
-			returnedDimensions.height = Math.round((originalHeight / originalWidth) * returnedDimensions.width);
-		}
-		else { //dimensions are currently pixels so change to percent
-			//Prevent division by zero
-			if(clientWidth == 0)
-				clientWidth = 1;
-			if(clientHeight == 0)
-				clientHeight = 1;
-			returnedDimensions.height = Math.round((dimensions.height / clientHeight) * 100);
-			returnedDimensions.width = Math.round((dimensions.width / clientWidth) * 100);
-		}
-		return returnedDimensions;
-	}
-	
-	/*
 		Invoked when the user changes the dimension type.
 	*/
 	function onChangeDimensionType(){
@@ -234,7 +208,7 @@ CKEDITOR.dialog.add( 'image3', function( editor ) {
 			width: widthField.getValue(),
 			height: heightField.getValue()
 		};
-		dimensions = convertDimensionsTo(dimensions, value);
+		dimensions = helpers.convertDimensionsTo(widget, dimensions, value, getNaturalImageDimensions());
 		
 		widthField.setValue(dimensions.width);
 		heightField.setValue(dimensions.height);
@@ -251,7 +225,7 @@ CKEDITOR.dialog.add( 'image3', function( editor ) {
 		if ( !value )
 			return;
 
-		// If the value of the field is invalid (e.g. with %), unlock ratio.
+		// If the value of the field is invalid, unlock ratio.
 		if ( !value.match( regexGetSizeOrEmpty ) )
 			toggleLockRatio( false );
 
@@ -264,14 +238,24 @@ CKEDITOR.dialog.add( 'image3', function( editor ) {
 			// will be empty. Use dimensions from pre-loader in such case instead.
 			width = domWidth || preLoadedWidth,
 			height = domHeight || preLoadedHeight;
+		
+		var isPercent = sizeImageByField.getValue() == PERCENT
+
+		var dimensions = {height: height, width: width};
+		//If we are using percent; convert the natural width/height into a percent and then perform the calculation
+		if(isPercent){
+			dimensions = helpers.convertDimensionsTo(widget, dimensions, PERCENT, getNaturalImageDimensions());
+		}
 
 		// If changing width, then auto-scale height.
-		if ( isWidth )
-			value = Math.round( height * ( value / width ) );
+		if ( isWidth ){
+			value = Math.round( dimensions.height * ( value / dimensions.width ) );
+		}
 
 		// If changing height, then auto-scale width.
-		else
-			value = Math.round( width * ( value / height ) );
+		else{
+			value = Math.round( dimensions.width * ( value / dimensions.height ) );
+		}
 
 		// If the value is a number, apply it to the other field.
 		if ( !isNaN( value ) )
@@ -326,15 +310,25 @@ CKEDITOR.dialog.add( 'image3', function( editor ) {
 				// If there's a new image loaded, reset button should revert
 				// cached dimensions of pre-loaded DOM element.
 				if ( srcChanged ) {
-					widthField.setValue( preLoadedWidth );
-					heightField.setValue( preLoadedHeight );
+					var dimensions = {height: preLoadedHeight, width: preLoadedWidth};
+					if(sizeImageByField.getValue() == PERCENT)
+					{
+						dimensions = helpers.convertDimensionsTo(widget, dimensions, sizeImageByField.getValue(), getNaturalImageDimensions());	
+					}
+					widthField.setValue( dimensions.width );
+					heightField.setValue( dimensions.height );
 				}
 
 				// If the old image remains, reset button should revert
 				// dimensions as loaded when the dialog was first shown.
 				else {
-					widthField.setValue( domWidth );
-					heightField.setValue( domHeight );
+					var dimensions = {height: domHeight, width: domWidth};
+					if(sizeImageByField.getValue() == PERCENT)
+					{
+						dimensions = helpers.convertDimensionsTo(widget, dimensions, sizeImageByField.getValue(), getNaturalImageDimensions());	
+					}
+					widthField.setValue( dimensions.width );
+					heightField.setValue( dimensions.height );
 				}
 
 				evt.data && evt.data.preventDefault();
@@ -368,8 +362,15 @@ CKEDITOR.dialog.add( 'image3', function( editor ) {
 
 			// Automatically adjust height to width to match
 			// the original ratio (based on dom- dimensions).
+			var dimensions = {
+				width: domWidth,
+				height: domHeight
+			};
+			var dimensionType = sizeImageByField.getValue();
+			if(dimensionType == PERCENT)
+				dimensions = helpers.convertDimensionsTo(widget, dimensions, dimensionType, getNaturalImageDimensions());
 			if ( lockRatio && width ) {
-				height = domHeight / domWidth * width;
+				height = dimensions.height / dimensions.width * width;
 
 				if ( !isNaN( height ) )
 					heightField.setValue( Math.round( height ) );
@@ -496,11 +497,12 @@ CKEDITOR.dialog.add( 'image3', function( editor ) {
 								id: 'sizeimageby',
 								label: lang.sizeImageBy,
 								onChange: onChangeDimensionType,
-								items: [[lang.pixels, 'px'],[lang.percentage, '%']],
+								items: [[lang.pixels, PIXEL],[lang.percentage, PERCENT]],
 								onLoad: function() {
-									//widthField = this;
+									
 								},
 								setup: function( widget ) {
+									sizeImageByField = this;
 									this.setValue( widget.data.sizeImageBy );
 								},
 								commit: function( widget ) {
