@@ -1253,12 +1253,8 @@
 
 		// Calculate values of size variables and mouse offsets.
 		resizer.on( 'mousedown', function( evt ) {
-			var helpers = CKEDITOR.plugins.image3
-			// Temporarily disable the resizer logic when using percentage; This will be fixed in a future requirement.
-			if(widget.data.sizeImageBy == helpers.PERCENT)
-			{
-				return;
-			}
+			var helpers = CKEDITOR.plugins.image3	
+
 			var image = widget.parts.image,
 
 				// "factor" can be either 1 or -1. I.e.: For right-aligned images, we need to
@@ -1422,6 +1418,7 @@
 					image.setAttributes( { width: newWidth, height: newHeight } );
 					updateData = true;
 				} else {
+
 					updateData = false;
 				}
 			}
@@ -1437,13 +1434,30 @@
 
 				// This is to bring back the regular behaviour of the resizer.
 				resizer.removeClass( 'cke_image_resizing' );
+				if(widget.data.sizeImageBy == helpers.PERCENT)
+				{
+					var dimensions = {
+						width: image.getAttribute( 'width' ) ,
+						height: image.getAttribute( 'height' ) 
+					};
+							
+					var percentDimensions = helpers.convertDimensionsTo(widget, dimensions, helpers.PERCENT, helpers.getNatural);
+					newWidth = percentDimensions.width;
+					newHeight = percentDimensions.height;
 
-				if ( updateData ) {
-					widget.setData( { width: newWidth, height: newHeight } );
+				}
+
+				if ( updateData || widget.data.sizeImageBy == helpers.PERCENT ) {
+						
+					if(newWidth && newHeight)	
+					{
+						widget.setData( { width: newWidth, height: newHeight } );
+					}
 
 					// Save another undo snapshot: after resizing.
 					editor.fire( 'saveSnapshot' );
 				}
+
 
 				// Don't update data twice or more.
 				updateData = false;
