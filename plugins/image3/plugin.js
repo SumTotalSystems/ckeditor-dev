@@ -1414,12 +1414,10 @@
 
 				// Don't update attributes if less than 10.
 				// This is to prevent images to visually disappear.
+				updateData = true;
 				if ( newWidth >= 15 && newHeight >= 15 ) {
 					image.setAttributes( { width: newWidth, height: newHeight } );
-					updateData = true;
-				} else {
-
-					updateData = false;
+					
 				}
 			}
 
@@ -1446,17 +1444,18 @@
 					newHeight = percentDimensions.height;
 
 				}
-
-				if ( updateData || widget.data.sizeImageBy == helpers.PERCENT ) {
-						
-					if(newWidth && newHeight)	
-					{
-						widget.setData( { width: newWidth, height: newHeight } );
-					}
-
-					// Save another undo snapshot: after resizing.
-					editor.fire( 'saveSnapshot' );
+				else{
+					newWidth = parseInt(image.getAttribute( 'width' ) , 10);
+					newHeight = parseInt(image.getAttribute( 'height' ) , 10);
 				}
+
+				if(updateData && newWidth && newHeight)	
+				{
+					widget.setData( { width: newWidth, height: newHeight } );
+				}
+
+				// Save another undo snapshot: after resizing.
+				editor.fire( 'saveSnapshot' );
 
 
 				// Don't update data twice or more.
