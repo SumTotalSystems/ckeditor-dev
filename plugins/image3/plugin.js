@@ -1178,13 +1178,28 @@
 		//If we are sizing by percentage then the dimensions need to be added to the wrapper instead of the image.
 		if(data.sizeImageBy == helpers.PERCENT){
 			for ( var d in dimensions ) {
-				image.setAttribute(d, '100%');//Image should be 100% of wrapper.
+				var border = parseInt(image.getStyle('border-width'));
+				var total;
+				if(d == 'width'){
+					var marginLeft = parseInt(image.getStyle('margin-left'));
+					var marginRight = parseInt(image.getStyle('margin-right'));
+					total = border *2 + marginLeft + marginRight;
+					image.setStyle('width', 'calc(100% - ' + total+ 'px)');
+				}
+				else if (d == 'height')
+				{
+					var marginTop = parseInt(image.getStyle('margin-top'));
+					var marginBottom = parseInt(image.getStyle('margin-bottom'));
+					total = border * 2 + marginTop + marginBottom;
+					image.setStyle('height', 'calc(100% - ' + total+ 'px)');
+				}
+				
 				if(data.hasCaption && caption){
 					caption.setStyle(d, '100%')//Caption should also be 100% of wrapper.
 				}
 				if(wrapper){
 					if ( dimensions[ d ] ){
-						wrapper.setStyle( d, dimensions[ d ] + data.sizeImageBy);
+						wrapper.setStyle( d, 'calc(' + dimensions[ d ] + data.sizeImageBy + ' + ' + total + 'px)');
 					}
 					else{
 						wrapper.removeStyle( d );
@@ -1201,13 +1216,15 @@
 					resizeWrapper.removeStyle(d);//Remove any styles on the resize wrapper;
 				}
 				if(data.hasCaption && caption){
-					caption.removeStyle(d, '100%')//Remove any styles from the figure.
+					caption.removeStyle(d)//Remove any styles from the figure.
 				}
 				if ( dimensions[ d ] ){
 					image.setAttribute( d, dimensions[ d ] + data.sizeImageBy);
+					image.removeStyle(d);
 				}
 				else{
 					image.removeAttribute( d );
+					image.removeStyle(d);
 				}
 			}
 		}
@@ -1417,7 +1434,16 @@
 				updateData = true;
 				if ( newWidth >= 15 && newHeight >= 15 ) {
 					image.setAttributes( { width: newWidth, height: newHeight } );
-					
+					image.removeStyle('width');
+					image.removeStyle('height');
+					if(widget.resizeWrapper){
+						widget.resizeWrapper.removeStyle('width');
+						widget.resizeWrapper.removeStyle('height');
+					}
+					if(widget.wrapper){
+						widget.wrapper.removeStyle('width');
+						widget.wrapper.removeStyle('height');
+					}
 				}
 			}
 
