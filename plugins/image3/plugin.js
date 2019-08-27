@@ -1178,18 +1178,18 @@
 		//If we are sizing by percentage then the dimensions need to be added to the wrapper instead of the image.
 		if(data.sizeImageBy == helpers.PERCENT){
 			for ( var d in dimensions ) {
-				var border = parseInt(image.getStyle('border-width'));
+				var border = parseInt(image.getStyle('border-width')) || 0;
 				var total;
 				if(d == 'width'){
-					var marginLeft = parseInt(image.getStyle('margin-left'));
-					var marginRight = parseInt(image.getStyle('margin-right'));
+					var marginLeft = parseInt(image.getStyle('margin-left')) || 0;
+					var marginRight = parseInt(image.getStyle('margin-right')) || 0;
 					total = border *2 + marginLeft + marginRight;
 					image.setStyle('width', 'calc(100% - ' + total+ 'px)');
 				}
 				else if (d == 'height')
 				{
-					var marginTop = parseInt(image.getStyle('margin-top'));
-					var marginBottom = parseInt(image.getStyle('margin-bottom'));
+					var marginTop = parseInt(image.getStyle('margin-top')) || 0;
+					var marginBottom = parseInt(image.getStyle('margin-bottom')) || 0;
 					total = border * 2 + marginTop + marginBottom;
 					image.setStyle('height', 'calc(100% - ' + total+ 'px)');
 				}
