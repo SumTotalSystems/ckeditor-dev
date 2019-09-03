@@ -1073,6 +1073,10 @@
 						image.attributes.width = data.width + data.sizeImageBy;
 					if(data.height)
 						image.attributes.height = data.height + data.sizeImageBy;
+					
+					//Remove styles from the image so that the attributes are used.
+					image.removeStyle('width');
+					image.removeStyle('height');
 				}
 			}
 			
