@@ -1074,9 +1074,15 @@
 					if(data.height)
 						image.attributes.height = data.height + data.sizeImageBy;
 					
-					//Remove styles from the image so that the attributes are used.
-					image.removeStyle('width');
-					image.removeStyle('height');
+					//Remove height/width styles from the image so that the attributes are used.
+					var styles = image.attributes.style.split(';');
+					var newStyles = "";
+					for(var i = 0; i< styles.length; i++){
+						var attr = styles[i].split(':')[0].trim();
+						if(attr != 'width' && attr != 'height')
+							newStyles += styles[i] + ';';
+					}
+					image.attributes.style = newStyles;
 				}
 			}
 			
