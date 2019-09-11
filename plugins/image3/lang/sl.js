@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'sl', {
 	uploadTab: 'Naloži',
 	urlMissing: 'Manjka vir (URL) slike.',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Slikovne pike',
+	percentage: 'odstotek',
+	sizeImageBy: 'Prilagoditev velikosti slike glede na:'
 } );

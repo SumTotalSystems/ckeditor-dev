@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'km', {
 	uploadTab: 'ផ្ទុក​ឡើង',
 	urlMissing: 'ខ្វះ URL ប្រភព​រូប​ភាព។',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixels', // MISSING
+	percentage: 'Percentage', // MISSING
+	sizeImageBy: 'Size image by:' // MISSING
 } );

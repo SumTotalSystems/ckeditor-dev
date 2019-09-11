@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'ku', {
 	uploadTab: 'بارکردن',
 	urlMissing: 'سەرچاوەی بەستەری وێنه بزره',
 	altMissing: 'جێگرەوەی دەق لەدەست چووە.',
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixels', // MISSING
+	percentage: 'Percentage', // MISSING
+	sizeImageBy: 'Size image by:' // MISSING
 } );

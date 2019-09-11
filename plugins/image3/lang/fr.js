@@ -19,6 +19,6 @@ CKEDITOR.plugins.setLang( 'image3', 'fr', {
 	urlMissing: 'L\'URL source de l\'image est manquante.',
 	altMissing: 'Vous n\'avez pas indiqué de texte de remplacement.',
 	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	percentage: 'Pourcentage',
+	sizeImageBy: 'Classer les images par :'
 } );

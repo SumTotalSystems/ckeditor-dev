@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'cs', {
 	uploadTab: 'Odeslat',
 	urlMissing: 'Zadané URL zdroje obrázku nebylo nalezeno.',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixely',
+	percentage: 'Procentuální hodnota',
+	sizeImageBy: 'Nastavit velikost obrázku:'
 } );

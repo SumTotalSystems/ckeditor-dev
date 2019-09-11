@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'id', {
 	uploadTab: 'Unggah',
 	urlMissing: 'Image source URL is missing.', // MISSING
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Piksel',
+	percentage: 'Persentase',
+	sizeImageBy: 'Ukur gambar berdasarkan:'
 } );

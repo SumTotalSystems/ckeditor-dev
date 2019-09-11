@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'oc', {
 	uploadTab: 'Mandar',
 	urlMissing: 'L\'URL font de l\'imatge es mancanta.',
 	altMissing: 'Lo tèxte alternatiu es mancant.',
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixels', // MISSING
+	percentage: 'Percentage', // MISSING
+	sizeImageBy: 'Size image by:' // MISSING
 } );

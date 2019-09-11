@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'fa', {
 	uploadTab: 'بالاگذاری',
 	urlMissing: 'آدرس URL اصلی تصویر یافت نشد.',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'پیکسل',
+	percentage: 'درصد',
+	sizeImageBy: 'تغییر اندازه تصویر بر اساس:'
 } );

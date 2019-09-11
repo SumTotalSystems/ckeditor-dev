@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'bg', {
 	uploadTab: 'Качване',
 	urlMissing: 'URL адреса на изображението липсва.',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Пиксела',
+	percentage: 'Процент',
+	sizeImageBy: 'Оразмерете изображението на:'
 } );

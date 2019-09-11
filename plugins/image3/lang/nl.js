@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'nl', {
 	uploadTab: 'Uploaden',
 	urlMissing: 'De URL naar de afbeelding ontbreekt.',
 	altMissing: 'Alternatieve tekst ontbreekt.',
-	pixels: 'Pixels',
+	pixels: 'pixels',
 	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	sizeImageBy: 'Grootte van afbeelding wijzigen naar:'
 } );

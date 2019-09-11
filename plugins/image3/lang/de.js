@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'de', {
 	uploadTab: 'Hochladen',
 	urlMissing: 'Bildquellen-URL fehlt.',
 	altMissing: 'Alternativer Text fehlt.',
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixel',
+	percentage: 'Prozentsatz',
+	sizeImageBy: 'Größe anpassen an:'
 } );

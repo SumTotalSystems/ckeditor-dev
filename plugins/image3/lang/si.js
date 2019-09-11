@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'si', {
 	uploadTab: 'උඩුගතකිරීම',
 	urlMissing: 'රුප මුලාශ්‍ර URL නැත.',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixels', // MISSING
+	percentage: 'Percentage', // MISSING
+	sizeImageBy: 'Size image by:' // MISSING
 } );

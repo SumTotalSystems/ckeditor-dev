@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'pl', {
 	uploadTab: 'Wyślij',
 	urlMissing: 'Podaj adres URL obrazka.',
 	altMissing: 'Podaj tekst zastępczy obrazka.',
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'pikseli',
+	percentage: 'Procent',
+	sizeImageBy: 'Ustaw rozmiar obrazu wg:'
 } );

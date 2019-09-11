@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'ug', {
 	uploadTab: 'يۈكلە',
 	urlMissing: 'سۈرەتنىڭ ئەسلى ھۆججەت ئادرېسى كەم',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixels', // MISSING
+	percentage: 'Percentage', // MISSING
+	sizeImageBy: 'Size image by:' // MISSING
 } );

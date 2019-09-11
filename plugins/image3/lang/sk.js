@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'sk', {
 	uploadTab: 'Nahrať',
 	urlMissing: 'Chýba URL zdroja obrázka.',
 	altMissing: 'Chýba alternatívny text.',
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixely',
+	percentage: 'Percento',
+	sizeImageBy: 'Veľkosť obrázka podľa:'
 } );

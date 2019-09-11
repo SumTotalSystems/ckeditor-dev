@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'tr', {
 	uploadTab: 'Karşıya Yükle',
 	urlMissing: 'Resmin URL kaynağı bulunamadı.',
 	altMissing: 'Alternatif yazı eksik.',
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Piksel',
+	percentage: 'Yüzde',
+	sizeImageBy: 'Görüntü boyutlandırma ölçütü:'
 } );

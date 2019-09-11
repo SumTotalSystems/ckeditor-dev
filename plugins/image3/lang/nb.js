@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'nb', {
 	uploadTab: 'Last opp',
 	urlMissing: 'Bildets adresse mangler.',
 	altMissing: 'Alternativ tekst mangler.',
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixels', // MISSING
+	percentage: 'Percentage', // MISSING
+	sizeImageBy: 'Size image by:' // MISSING
 } );

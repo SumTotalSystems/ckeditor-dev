@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'zh-cn', {
 	uploadTab: '上传',
 	urlMissing: '缺少图像源文件地址',
 	altMissing: '缺少替换文本',
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: '像素',
+	percentage: '百分比',
+	sizeImageBy: '图片大小：'
 } );

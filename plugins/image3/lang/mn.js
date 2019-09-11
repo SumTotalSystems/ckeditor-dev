@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'mn', {
 	uploadTab: 'Илгээж ачаалах',
 	urlMissing: 'Зургийн эх сурвалжийн хаяг (URL) байхгүй байна.',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixels', // MISSING
+	percentage: 'Percentage', // MISSING
+	sizeImageBy: 'Size image by:' // MISSING
 } );

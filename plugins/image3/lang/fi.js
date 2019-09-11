@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'fi', {
 	uploadTab: 'Lisää tiedosto',
 	urlMissing: 'Kuvan lähdeosoite puuttuu.',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'pikseliä',
+	percentage: 'Prosenttimäärä',
+	sizeImageBy: 'Muuta kuvakokoa:'
 } );

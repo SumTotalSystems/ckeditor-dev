@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'cy', {
 	uploadTab: 'Lanlwytho',
 	urlMissing: 'URL gwreiddiol y ddelwedd ar goll.',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixels', // MISSING
+	percentage: 'Percentage', // MISSING
+	sizeImageBy: 'Size image by:' // MISSING
 } );

@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'zh', {
 	uploadTab: '上傳',
 	urlMissing: '遺失圖片來源之 URL ',
 	altMissing: '替代文字遺失。',
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: '像素',
+	percentage: '百分比',
+	sizeImageBy: '調整影像大小：'
 } );

@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'gu', {
 	uploadTab: 'અપલોડ',
 	urlMissing: 'ઈમેજની મૂળ URL છે નહી.',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixels', // MISSING
+	percentage: 'ટકાવારી',
+	sizeImageBy: 'Size image by:' // MISSING
 } );

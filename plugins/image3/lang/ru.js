@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'ru', {
 	uploadTab: 'Загрузка файла',
 	urlMissing: 'Не указана ссылка на изображение.',
 	altMissing: 'Не задан альтернативный текст',
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'пиксели',
+	percentage: 'Процент',
+	sizeImageBy: 'Изменить размер изображения:'
 } );

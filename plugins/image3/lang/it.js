@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'it', {
 	uploadTab: 'Carica',
 	urlMissing: 'Manca l\'URL dell\'immagine.',
 	altMissing: 'Testo alternativo mancante.',
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixel',
+	percentage: 'Percentuale',
+	sizeImageBy: 'Ridimensiona immagine per:'
 } );

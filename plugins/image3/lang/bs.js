@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'bs', {
 	uploadTab: 'Šalji',
 	urlMissing: 'Image source URL is missing.', // MISSING
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pikseli',
+	percentage: 'Procenat',
+	sizeImageBy: 'Podesi veličinu slike prema:'
 } );

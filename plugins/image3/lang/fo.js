@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'fo', {
 	uploadTab: 'Send til ambætaran',
 	urlMissing: 'URL til mynd manglar.',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixels', // MISSING
+	percentage: 'Percentage', // MISSING
+	sizeImageBy: 'Size image by:' // MISSING
 } );

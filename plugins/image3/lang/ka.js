@@ -18,7 +18,7 @@ CKEDITOR.plugins.setLang( 'image3', 'ka', {
 	uploadTab: 'აქაჩვა',
 	urlMissing: 'სურათის URL არაა შევსებული.',
 	altMissing: 'Alternative text is missing.', // MISSING
-	pixels: 'Pixels',
-	percentage: 'Percentage',
-	sizeImageBy: 'Size image by:'
+	pixels: 'Pixels', // MISSING
+	percentage: 'პროცენტი',
+	sizeImageBy: 'Size image by:' // MISSING
 } );
