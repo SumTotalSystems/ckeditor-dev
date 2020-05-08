@@ -403,9 +403,7 @@ CKEDITOR.replaceClass = 'ckeditor';
 				' dir="{langDir}"' +
 				' lang="{langCode}"' +
 				' role="application"' +
-				( editor.title ? ' aria-labelledby="cke_{name}_arialbl"' : '' ) +
 				'>' +
-				( editor.title ? '<span id="cke_{name}_arialbl" class="cke_voice_label">{voiceLabel}</span>' : '' ) +
 				'<{outerEl} class="cke_inner cke_reset" role="presentation">' +
 					'{topHtml}' +
 					'<{outerEl} id="{contentId}" class="cke_contents cke_reset" role="presentation"></{outerEl}>' +

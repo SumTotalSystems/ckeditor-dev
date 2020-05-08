@@ -44,7 +44,8 @@
 			CKEDITOR.dialog.add( commandName, this.path + 'dialogs/a11yhelp.js' );
 
 			editor.on( 'ariaEditorHelpLabel', function( evt ) {
-				evt.data.label = editor.lang.common.editorHelp;
+				if (evt.data.label == '')
+					evt.data.label = editor.lang.common.editorHelp;
 			} );
 		}
 	} );
